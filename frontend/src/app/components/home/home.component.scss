@@ -1,0 +1,347 @@
+@use "sass:color";
+@use '../../../variables.scss' as *;
+
+// Estilos gerais
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+// Navbar styles
+.navbar {
+  transition: background-color 0.3s ease;
+  padding: 1rem 0;
+  min-height: 70px; // Mudando para min-height para permitir expansão
+  background-color: transparent;
+
+  .navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: $white;
+    padding: 0.5rem 1rem; // Adicionando padding para evitar sobreposição
+  }
+
+  .nav-link {
+    color: $white;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: $white;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  &.bg-transparent {
+    background-color: transparent;
+
+    .navbar-brand, .nav-link {
+      color: $white;
+    }
+
+    .nav-link::after {
+      background-color: $white;
+    }
+
+    .navbar-toggler{
+      color: $white;
+    }
+  }
+
+  &.scrolled {
+    background-color: $white;
+
+    .navbar-brand, .nav-link {
+      color: $primary-blue;
+    }
+
+    .nav-link::after {
+      background-color: $primary-blue;
+    }
+  }
+
+  .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .navbar-toggler {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (max-width: 991px) { // Ajustes para telas menores
+    .navbar-collapse {
+      background-color: $white;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+
+      .nav-link {
+        color: $primary-blue;
+
+        &::after {
+          background-color: $primary-blue;
+        }
+      }
+    }
+  }
+}
+
+// Ajuste para scroll-padding para todas as seções
+html {
+  scroll-padding-top: 70px; // Mesmo valor da altura do navbar
+  scroll-behavior: smooth;
+}
+
+
+
+// Hero section
+.hero {
+  background-image: url('/assets/images/banner.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba($primary-blue, 0.6),
+      rgba($primary-blue, 0.5)
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+
+    h1 {
+      color: #ffffff;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+
+    p {
+      color: #f8f9fa;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .lead {
+      color: #ffffff;
+    }
+
+    .h5 {
+      color: #ffffff;
+    }
+
+    .btn {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      border-color: #ffffff;
+
+      &:hover {
+        color: $primary-blue;
+        background-color: #ffffff;
+        border-color: #ffffff;
+      }
+    }
+  }
+}
+
+// Seção de detalhes
+#detalhes {
+  padding: 4rem 0;
+  background-color: $gray;
+
+  .col-md-4 {
+    margin-bottom: 30px;
+    text-align: center;
+
+    .card {
+      background: $white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba($primary-blue, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      i {
+        font-size: 2.5rem;
+        color: $secondary-blue;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        color: $primary-blue;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+// Seção de contagem regressiva
+.countdown {
+  background-color: $light-blue;
+  padding: 3rem 0;
+  text-align: center;
+
+  h2 {
+    color: $primary-blue;
+    margin-bottom: 2rem;
+  }
+
+  .countdown-item {
+    display: inline-block;
+    margin: 0 1.5rem;
+
+    .number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: $secondary-blue;
+    }
+
+    .label {
+      color: $primary-blue;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Botões
+.btn-primary {
+  background-color: $secondary-blue;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  color: $white;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: color.adjust($secondary-blue, $lightness: -10%);
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .hero .hero-content {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  .countdown .countdown-item {
+    margin: 0 1rem;
+
+    .number {
+      font-size: 2rem;
+    }
+  }
+}
+// Seção Lista de Presentes
+#presentes {
+  .btn-outline-dark {
+    color: $primary-blue;
+    border-color: $primary-blue;
+
+    &:hover {
+      background-color: $primary-blue;
+      color: $white;
+    }
+  }
+}
+
+// Seção Confirmação
+#confirmacao {
+  .btn-dark {
+    background-color: $primary-blue;
+    border-color: $primary-blue;
+
+    &:hover {
+      background-color: color.adjust($primary-blue, $lightness: -10%);
+    }
+  }
+}
+
+// Footer
+footer.bg-dark {
+  background-color: rgba($primary-blue, 0.95) !important;
+
+  .social-links {
+    a:hover {
+      opacity: 0.8;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .row {
+      text-align: center;
+
+      .col-md-4 {
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.text-end {
+          text-align: center !important;
+        }
+      }
+    }
+
+    h5 {
+      font-size: 1.1rem;
+    }
+
+    small {
+      font-size: 0.8rem;
+    }
+  }
+}
+

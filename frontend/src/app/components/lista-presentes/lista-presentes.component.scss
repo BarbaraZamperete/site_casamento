@@ -1,0 +1,120 @@
+@use "sass:color";
+@use '../../../variables.scss' as *;
+
+// Ajuste do padding para compensar a navbar fixa
+section {
+  padding-top: 100px;
+}
+
+
+
+
+// Estilização dos cards
+.card {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .texto-primary {
+    color: $primary-blue;
+  }
+}
+
+// Estilização do modal
+.modal-content {
+  border: none;
+  border-radius: 8px;
+
+  .texto-primary {
+    color: $primary-blue;
+  }
+}
+
+// Estilização dos botões
+.btn {
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &.btn-primary {
+    background-color: $primary-blue;
+    border-color: $primary-blue;
+  }
+}
+
+// Estilização do rodapé
+// Footer
+footer.bg-dark {
+  background-color: rgba($primary-blue, 0.95) !important;
+
+  .social-links {
+    a:hover {
+      opacity: 0.8;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .row {
+      text-align: center;
+
+      .col-md-4 {
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.text-end {
+          text-align: center !important;
+        }
+      }
+    }
+
+    h5 {
+      font-size: 1.1rem;
+    }
+
+    small {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+
+// Footer
+footer.bg-dark {
+  background-color: rgba($primary-blue, 0.95) !important;
+
+  .social-links {
+    a:hover {
+      opacity: 0.8;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .row {
+      text-align: center;
+
+      .col-md-4 {
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.text-end {
+          text-align: center !important;
+        }
+      }
+    }
+
+    h5 {
+      font-size: 1.1rem;
+    }
+
+    small {
+      font-size: 0.8rem;
+    }
+  }
+}

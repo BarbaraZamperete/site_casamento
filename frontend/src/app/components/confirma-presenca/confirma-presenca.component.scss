@@ -1,0 +1,23 @@
+@use "sass:color";
+@use '../../../variables.scss' as *;
+
+// Ajuste do padding para compensar a navbar fixa
+section {
+  padding-top: 100px;
+}
+
+
+// Estilização dos botões
+.btn {
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &.btn-primary {
+    background-color: $primary-blue;
+    border-color: $primary-blue;
+  }
+}
+
+.content{
+  height: 500px
+}

@@ -1,0 +1,50 @@
+<app-simple-nav-bar></app-simple-nav-bar>
+
+<!-- Lista de Presentes -->
+<section class="bg-light py-5 mt-5">
+  <div class="container">
+    <h2 class="texto-primary text-center display-4 font-playfair mb-4">Lista de Presentes</h2>
+    <p class="text-secondary text-center lead mb-5">Escolha um presente especial para celebrar conosco</p>
+
+    <div class="row g-4">
+      <!-- Card de Presente -->
+      <div class="col-md-4 col-sm-6" *ngFor="let presente of presentes">
+        <div class="card h-100 shadow-sm border-0 transition-hover">
+          <img [src]="presente.imagem" class="card-img-top" style="height: 250px; object-fit: cover;" [alt]="presente.nome">
+          <div class="card-body">
+            <h5 class="card-title texto-primary font-playfair">{{presente.nome}}</h5>
+            <p class="card-text text-secondary">{{presente.descricao}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="h5 texto-primary mb-0">R$ {{presente.valor | number:'1.2-2'}}</p>
+              <button class="btn btn-primary rounded-pill px-4" (click)="comprarPresente(presente)">
+                Presentear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 rounded-3">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title texto-primary font-playfair" id="confirmacaoModalLabel">Confirmar Presente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Você será redirecionado para a página de pagamento.</p>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary rounded-pill px-4" (click)="confirmarCompra()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>
