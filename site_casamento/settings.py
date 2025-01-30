@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,14 +81,17 @@ WSGI_APPLICATION = 'site_casamento.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'casamento_db',
-        'USER': 'casamento_user',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'casamento_db',
+    #     'USER': 'casamento_user',
+    #     'PASSWORD': 'admin',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')  # O Railway configura essa variável de ambiente automaticamente
+    )
 }
 
 
