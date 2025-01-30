@@ -39,6 +39,12 @@ export class ApiService {
     );
   }
 
+  confirmarPresenca(convidados: { id: number, presenca_confirmada: boolean }[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/convidados/confirmar-presenca/`, {
+      convidados: convidados
+    });
+  }
+
   // getCompras(): Observable<any> {
   //   return this.http.get(`${this.apiUrl}/compras/`);
   // }

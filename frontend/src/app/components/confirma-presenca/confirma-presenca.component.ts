@@ -18,6 +18,9 @@ export class ConfirmaPresencaComponent {
   showResults = false;
   showNotFound = false;
   guests: Array<{id: string, name: string, confirmed: boolean}> = [];
+  isConfirming = false;
+  confirmationSuccess = false;
+  confirmationError = '';
 
   constructor(
     private apiService: ApiService,
@@ -65,7 +68,39 @@ export class ConfirmaPresencaComponent {
   }
 
   confirmPresence(): void {
-    const confirmedGuests = this.guests.filter(guest => guest.confirmed);
-    console.log('Convidados confirmados:', confirmedGuests);
+    if (this.isConfirming) return;
+
+    const guestsToConfirm = this.guests.map(guest => ({
+      id: Number(guest.id),
+      presenca_confirmada: guest.confirmed
+    }));
+
+    if (guestsToConfirm.length === 0) {
+      this.confirmationError = 'Por favor, selecione pelo menos um convidado.';
+      return;
+    }
+
+    this.isConfirming = true;
+    this.confirmationError = '';
+    this.confirmationSuccess = false;
+
+    this.apiService.confirmarPresenca(guestsToConfirm).subscribe({
+      next: (response) => {
+        this.confirmationSuccess = true;
+        this.isConfirming = false;
+        this.showResults = false;
+        this.searchForm.reset({ searchType: 'code' });
+      },
+      error: (error) => {
+        console.error('Erro ao confirmar presença:', error);
+        this.confirmationError = 'Ocorreu um erro ao confirmar a presença. Por favor, tente novamente.';
+        this.isConfirming = false;
+      }
+    });
+  }
+
+  clearMessages(): void {
+    this.confirmationSuccess = false;
+    this.confirmationError = '';
   }
 }

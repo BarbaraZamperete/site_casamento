@@ -1,6 +1,10 @@
 @use "sass:color";
 @use '../../../../variables.scss' as *;
 
+:host {
+  display: block;
+  flex-shrink: 0; // Impede que o footer encolha
+}
 
 // Footer
 footer.bg-dark {

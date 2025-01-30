@@ -34,8 +34,8 @@ export class HomeComponent {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const navbar = document.querySelector('.navbar');
-    if (navbar) {  // Adicionando verificação de null
-      if (window.pageYOffset > window.innerHeight - 100) {
+    if (navbar) {
+      if (window.scrollY > window.innerHeight - 100) {
         navbar.classList.add('scrolled');
         navbar.classList.remove('bg-transparent');
       } else {

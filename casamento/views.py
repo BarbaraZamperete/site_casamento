@@ -35,6 +35,35 @@ class ConvidadoViewSet(ModelViewSet):
             return Response(serializer.data)
         return Response({'error': 'Nome não fornecido'}, status=400)
 
+    @action(detail=False, methods=['post'], url_path='confirmar-presenca')
+    def confirmar_presenca(self, request):
+        """
+        Confirma a presença de um ou mais convidados
+        URL: /api/convidados/confirmar-presenca/
+        Body: {
+            "convidados": [
+                {"id": 1, "presenca_confirmada": true},
+                {"id": 2, "presenca_confirmada": false}
+            ]
+        }
+        """
+        convidados_data = request.data.get('convidados', [])
+        if not convidados_data:
+            return Response({'error': 'Nenhum convidado fornecido'}, status=400)
+
+        for convidado_data in convidados_data:
+            convidado_id = convidado_data.get('id')
+            presenca_confirmada = convidado_data.get('presenca_confirmada')
+            
+            try:
+                convidado = self.queryset.get(id=convidado_id)
+                convidado.presenca_confirmada = presenca_confirmada
+                convidado.save()
+            except Convidado.DoesNotExist:
+                return Response({'error': f'Convidado com ID {convidado_id} não encontrado'}, status=404)
+
+        return Response({'message': 'Presenças atualizadas com sucesso'})
+
 class PresenteViewSet(ModelViewSet):
     queryset = Presente.objects.all()
     serializer_class = PresenteSerializer
