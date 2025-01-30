@@ -24,4 +24,4 @@ yarn-error.log
 # frontend_casamento
 venv
 __pycache__
-frontend
+frontend/
