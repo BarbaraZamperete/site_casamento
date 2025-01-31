@@ -57,6 +57,10 @@ MIDDLEWARE = [
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://casamentobackend-production.up.railway.app"
+]
+
 ROOT_URLCONF = 'site_casamento.urls'
 
 TEMPLATES = [
