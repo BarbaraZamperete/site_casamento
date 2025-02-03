@@ -20,6 +20,7 @@ class Presente(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     image_path = models.CharField(max_length=255, blank=True)
     imagem = models.ImageField(upload_to='uploads/')
+    loja = models.ForeignKey('Loja', on_delete=models.SET_NULL, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Se uma imagem foi enviada, salva o caminho dela em image_path
@@ -30,6 +31,14 @@ class Presente(models.Model):
         # Gera o QR Code quando um novo Presente é criado
         qr_code_path = gerar_qrcode(f"{self.valor:.2f}", f'{self.id}-{self.nome}')
         print(qr_code_path)  # Exibe o caminho do QR Code gerado
+
+    def __str__(self):
+        return self.nome
+    
+class Loja(models.Model):
+    nome = models.CharField(max_length=255)
+    endereco = models.CharField(max_length=255)
+    tipo = models.CharField(max_length=20, choices=[('fisica', 'Física'), ('virtual', 'Virtual')])
 
     def __str__(self):
         return self.nome
