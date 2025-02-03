@@ -7,9 +7,13 @@ class ConvidadoAdmin(admin.ModelAdmin):
     list_filter = ('na_lista', 'presenca_confirmada')
 
 class PresenteAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'valor', 'loja')
+    list_display = ('nome', 'valor', 'get_lojas')
     search_fields = ('nome', 'descricao')
-    list_filter = ('loja',)
+    list_filter = ('lojas',)
+
+    def get_lojas(self, obj):
+        return ", ".join([loja.nome for loja in obj.lojas.all()])
+    get_lojas.short_description = 'Lojas'
 
 class CompraAdmin(admin.ModelAdmin):
     list_display = ('convidado', 'presente', 'data_compra', 'valor_pago', 'status_pagamento')

@@ -9,4 +9,5 @@ router.register(r'compras', CompraViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('presentes/<int:pk>/lojas/', PresenteViewSet.as_view({'get': 'get_lojas'}), name='presente-lojas'),
 ]

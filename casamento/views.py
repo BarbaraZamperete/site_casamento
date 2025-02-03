@@ -71,6 +71,27 @@ class PresenteViewSet(ModelViewSet):
     queryset = Presente.objects.all()
     serializer_class = PresenteSerializer
 
+    @action(detail=True, methods=['get'], url_path='lojas')
+    def get_lojas(self, request, pk=None):
+        """
+        Retorna as lojas associadas a um presente específico
+        URL: /api/presentes/{id}/lojas/
+        """
+        try:
+            presente = self.get_object()  # Obtém o presente pelo ID (pk)
+            lojas = presente.lojas.all()  # Obtém todas as lojas associadas ao presente
+
+            if lojas.exists():  # Verifica se há lojas associadas
+                # Serializa as lojas
+                lojas_data = [{'id': loja.id, 'nome': loja.nome, 'endereco': loja.endereco, 'tipo': loja.tipo} for loja in lojas]
+                return Response(lojas_data, status=status.HTTP_200_OK)
+            else:
+                # Retorna uma mensagem informativa se não houver lojas
+                return Response({'message': 'Não há lojas associadas a este presente.'}, status=status.HTTP_200_OK)
+
+        except Presente.DoesNotExist:
+            return Response({'error': 'Presente não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
 class CompraViewSet(ModelViewSet):
     queryset = Compra.objects.all()
     serializer_class = CompraSerializer

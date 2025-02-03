@@ -20,7 +20,7 @@ class Presente(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     image_path = models.CharField(max_length=255, blank=True)
     imagem = models.ImageField(upload_to='uploads/')
-    loja = models.ForeignKey('Loja', on_delete=models.SET_NULL, null=True, blank=True)
+    lojas = models.ManyToManyField('Loja', blank=True)
 
     def save(self, *args, **kwargs):
         # Se uma imagem foi enviada, salva o caminho dela em image_path
