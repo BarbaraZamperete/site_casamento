@@ -1,5 +1,7 @@
 from django.db import models
 
+from .utils.gerar_qrcode import gerar_qrcode
+
 
 class Convidado(models.Model):
     nome = models.CharField(max_length=255)
@@ -24,6 +26,10 @@ class Presente(models.Model):
         if self.imagem:
             self.image_path = self.imagem.url
         super().save(*args, **kwargs)
+
+        # Gera o QR Code quando um novo Presente é criado
+        qr_code_path = gerar_qrcode(f"{self.valor:.2f}", f'{self.id}-{self.nome}')
+        print(qr_code_path)  # Exibe o caminho do QR Code gerado
 
     def __str__(self):
         return self.nome

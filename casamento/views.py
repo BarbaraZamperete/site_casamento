@@ -75,38 +75,51 @@ class CompraViewSet(ModelViewSet):
     queryset = Compra.objects.all()
     serializer_class = CompraSerializer
 
-    @action(detail=False, methods=['post'], url_path='gerar-qrcode')
-    def gerar_qrcode_view(self, request):
+    @action(detail=False, methods=['post'], url_path='gerar-compra')
+    def gerar_compra(self, request):
         """
-        Gera um QR Code para pagamento
-        URL: /api/compras/gerar-qrcode/
+        Cria uma nova compra com status pendente
+        URL: /api/compras/gerar-compra/
         Body: {
-            "id": "1",
-            "nome": "Produto Exemplo",
+            "convidadoId": "1",
+            "presenteId": "1",
             "valor": 100.00
         }
         """
-        id = request.data.get('id')
-        nome = request.data.get('nome')
-        valor = request.data.get('valor')
         convidado_id = request.data.get('convidadoId')
+        presente_id = request.data.get('presenteId')
+        valor = request.data.get('valor')
 
-        if not all([id, nome, valor, convidado_id]):
-            return Response({'error': 'ID, nome e valor são obrigatórios'}, status=status.HTTP_400_BAD_REQUEST)
+        if not all([convidado_id, presente_id, valor]):
+            return Response({'error': 'Convidado ID, Presente ID e valor são obrigatórios'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verifica se já existe uma compra pendente com os mesmos dados
+        compra_existente = self.queryset.filter(
+            convidado_id=convidado_id,
+            presente_id=presente_id,
+            valor_pago=valor,
+            status_pagamento='pendente'
+        ).first()
+
+        if compra_existente:
+            # Retorna o caminho do QR Code existente
+            qr_code_path = f'/media/qrcode/{compra_existente.presente.id}-{compra_existente.presente.nome}.png'
+            return Response({'message': 'Uma compra pendente já existe para este convidado e presente.', 'qrCodeUrl': qr_code_path}, status=status.HTTP_200_OK)
 
         try:
-            # Chama a função de utilitários para gerar o QR Code
-            qr_code_path = gerar_qrcode(valor, f'{id}-{nome}')
-            print(qr_code_path)
-            # Cria uma nova instância de Compra
+            # Cria uma nova instância de Compra com status pendente
             nova_compra = Compra(
-                convidado_id=convidado_id,
-                presente_id=id,
-                valor_pago=valor
+                convidado_id=convidado_id,  # Usando o ID do convidado
+                presente_id=presente_id,    # Usando o ID do presente
+                valor_pago=valor,
+                status_pagamento='pendente'
             )
             nova_compra.save()  # Salva a nova compra no banco de dados
 
-            return Response({'qrCodeUrl': qr_code_path}, status=status.HTTP_201_CREATED)
+            # Gera o caminho do QR Code
+            qr_code_path = f'/media/qrcode/{nova_compra.presente.id}-{nova_compra.presente.nome}.png'
+
+            return Response({'message': 'Compra criada com sucesso', 'compraId': nova_compra.id, 'qrCodeUrl': qr_code_path}, status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
