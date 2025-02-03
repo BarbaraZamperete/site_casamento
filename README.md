@@ -28,17 +28,18 @@ Este é um projeto full-stack de um site de casamento desenvolvido com Angular (
 ## 🚀  Tecnologias Utilizadas
 
 ### Backend
+
 - Python 3.10
 - Django 4.2+
 - Django REST Framework
 - PostgreSQL
 
 ### Frontend
+
 - Angular 17
 - TypeScript
 - Bootstrap 5
 - SCSS
-
 
 ## 🛠️ Instalação e Configuração
 
@@ -96,7 +97,7 @@ python manage.py runserver
 
 ## 💻 Estrutura do Projeto
 
-```
+```text
 frontend_casamento/
 ├── src/
 │   ├── app/
@@ -130,7 +131,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## ✨ Autores
 
-* **Bárbara Zamperete** - *Desenvolvimento Full-stack*
+- **Bárbara Zamperete** - *Desenvolvimento Full-stack*
 
 ---
 ⌨️ com ❤️ por Bárbara Zamperete
