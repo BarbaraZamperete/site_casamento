@@ -21,6 +21,7 @@ class Presente(models.Model):
     image_path = models.CharField(max_length=255, blank=True)
     imagem = models.ImageField(upload_to='uploads/')
     lojas = models.ManyToManyField('Loja', blank=True)
+    link_compra = models.CharField(max_length=255, blank=True)
 
     def save(self, *args, **kwargs):
         # Se uma imagem foi enviada, salva o caminho dela em image_path
