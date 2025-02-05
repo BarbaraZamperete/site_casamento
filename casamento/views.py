@@ -65,7 +65,7 @@ class ConvidadoViewSet(ModelViewSet):
             except Convidado.DoesNotExist:
                 return Response({'error': f'Convidado com ID {convidado_id} não encontrado'}, status=404)
 
-        return Response({'message': 'Presenças atualizadas com sucesso'})
+        return Response({'message': 'Presenças atualizadas com sucesso', 'presenca_confirmada': presenca_confirmada})
 
 class PresenteViewSet(ModelViewSet):
     queryset = Presente.objects.all()
