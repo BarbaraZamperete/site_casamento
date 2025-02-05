@@ -38,7 +38,7 @@ class ConvidadoViewSet(ModelViewSet):
             return Response(serializer.data)
         return Response({'error': 'Nome não fornecido'}, status=400)
 
-    @action(detail=False, methods=['post'], url_path='confirmar-presenca')
+    @action(detail=False, methods=['put'], url_path='confirmar-presenca')
     def confirmar_presenca(self, request):
         """
         Confirma a presença de um ou mais convidados
